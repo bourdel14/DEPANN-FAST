@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.custom.i18n.resources" value="fr/eni_ecole/jee/languages/messages" />
+	<!-- Add packages here -->
+	<package name="depannFastPkg" namespace="/" extends="struts-default">
+
+		<!-- Liste des intercepteurs -->
+		<interceptors>
+			<interceptor-stack name="storeStack">
+				<interceptor-ref name="store">
+					<param name="operationMode">STORE</param>
+				</interceptor-ref>
+				<interceptor-ref name="defaultStack" />
+
+
+			</interceptor-stack>
+
+			<interceptor-stack name="retrieveStack">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="store">
+					<param name="operationMode">RETRIEVE</param>
+				</interceptor-ref>
+
+
+			</interceptor-stack>
+		</interceptors>
+
+		<!-- Action pour se connecter en tant que depanneur ou collaborateur -->
+		<action name="Connecter" class="fr.eni_ecole.jee.actions.Connecter">
+			<result name="success">/vues/accueil.jsp</result>
+			<result name="input">/vues/connexionUtilisateur.jsp</result>
+		</action>
+
+		<!-- Action pour accéder à la page de connexion d'un depanneur ou collaborateur -->
+		<action name="connexion">
+			<result>/vues/connexionUtilisateur.jsp</result>
+		</action>
+		
+		<!-- Action pour se connecter en tant que client-->
+		<action name="ConnecterClient" class="fr.eni_ecole.jee.actions.ConnecterClient">
+			<result name="success">/vues/accueil.jsp</result>
+			<result name="input">/vues/connexionClient.jsp</result>
+		</action>
+
+		<!-- Action pour accéder à la page de connexion d'un depanneur ou collaborateur -->
+		<action name="connexionClient">
+			<result>/vues/connexionClient.jsp</result>
+		</action>
+
+		<action name="Deconnecter" class="fr.eni_ecole.jee.actions.Deconnecter">
+			<result name="success" type="redirect">/vues/accueil.jsp</result>
+		</action>
+
+		<!-- Action pour valider la création d'un client -->
+		<action name="ValiderAjouterClient" class="fr.eni_ecole.jee.actions.ValiderAjouterClient">
+			<result name="success">/vues/accueil.jsp</result>
+			<result name="input">/vues/creationClient.jsp</result>
+		</action>
+
+		<!-- Action pour accéder à la page de création d'un client -->
+		<action name="creationClient">
+			<result>/vues/creationClient.jsp</result>
+		</action>
+
+		<!-- Action pour valider la création d'un utilisateur -->
+		<action name="ValiderAjouterUtilisateur" class="fr.eni_ecole.jee.actions.ValiderAjouterUtilisateur">
+			<result name="success">/vues/accueil.jsp</result>
+			<result name="input">/vues/creationDepanneur.jsp</result>
+		</action>
+
+		<!-- Action pour accéder à la page de création d'un dépanneur -->
+		<action name="creationUtilisateur">
+			<result>/vues/creationUtilisateur.jsp</result>
+		</action>
+
+		<!-- Action pour valider la création d'une intervention -->
+		<action name="ValiderAjouterIntervention"
+			class="fr.eni_ecole.jee.actions.ValiderAjouterIntervention">
+			<result name="success">/vues/accueil.jsp</result>
+			<result name="input">/vues/creationIntervention.jsp</result>
+		</action>
+
+		<!-- Action pour accéder à la page de création d'une intervention -->
+		<action name="creationIntervention" class="fr.eni_ecole.jee.actions.CreationIntervention">
+			<result name="success">/vues/creationIntervention.jsp</result>
+		</action>
+
+		<!-- Action pour valider la création d'une intervention -->
+		<action name="ValiderAffecterIntervention"
+			class="fr.eni_ecole.jee.actions.ValiderAffecterIntervention">
+			<interceptor-ref name="storeStack" />
+			<result name="success">/vues/accueil.jsp</result>
+			<result name="input" type="redirectAction">affectationIntervention</result>
+		</action>
+
+		<!-- Action pour accéder à la page de création d'une intervention -->
+		<action name="affectationIntervention" class="fr.eni_ecole.jee.actions.AffectationIntervention">
+			<interceptor-ref name="retrieveStack" />
+			<result name="success">/vues/affectationIntervention.jsp</result>
+		</action>
+
+		<!-- Action pour travailler sur les interventions d'un dépanneur -->
+		<action name="ValiderModifierIntervention"
+			class="fr.eni_ecole.jee.actions.ValiderModifierIntervention">
+			<result name="success" type="redirectAction">modificationIntervention</result>
+		</action>
+
+		<!-- Action pour accéder à la page de travail d'un dépanneur -->
+		<action name="modificationIntervention"
+			class="fr.eni_ecole.jee.actions.ModificationIntervention">
+			<result name="success">/vues/modificationIntervention.jsp</result>
+		</action>
+
+
+	</package>
+
+
+</struts>
